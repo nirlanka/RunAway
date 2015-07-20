@@ -117,6 +117,14 @@ SideScroller.Game.prototype = {
         this.player.isDucked = false;
       }
 
+      // --> new player
+      if(!this.cursors.right.isDown && this.player2.isDucked && !this.pressingDown2) {
+        //change image and update the body size for the physics engine
+        this.player2.loadTexture('player');
+        this.player2.body.setSize(this.player2.standDimensions.width, this.player2.standDimensions.height);
+        this.player2.isDucked = false;
+      }
+
       //restart the game if reaching the edge
       if(this.player.x >= this.game.world.width) {
         this.game.state.start('Game');
@@ -162,7 +170,15 @@ SideScroller.Game.prototype = {
           right: {
               type: 'buttons',
               buttons: [
-                false,
+                {
+                  label: 'j', 
+                  touchStart: function() {
+                    if(!that.player2.alive) {
+                      return;
+                    }
+                    that.playerJump(2);
+                  }
+                },
                 {
                   label: 'J', 
                   touchStart: function() {
@@ -172,7 +188,18 @@ SideScroller.Game.prototype = {
                     that.playerJump();
                   }
                 },
-                false,
+                {
+                  label: 'd',
+                  touchStart: function() {
+                    if(!that.player2.alive) {
+                      return;
+                    }
+                    that.pressingDown2 = true; that.playerDuck(2);
+                  },
+                  touchEnd: function(){
+                    that.pressingDown2 = false;
+                  }
+                },
                 {
                   label: 'D',
                   touchStart: function() {
