@@ -97,10 +97,17 @@ SideScroller.Game.prototype = {
       this.player2.body.velocity.x = 300;  // new player
 
       if(this.cursors.up.isDown) {
-        this.playerJump();
+        this.playerJump(1);
       }
       else if(this.cursors.down.isDown) {
-        this.playerDuck();
+        this.playerDuck(1);
+      }
+      // --> new player
+      if(this.cursors.left.isDown) {
+        this.playerJump(2);
+      }
+      else if(this.cursors.right.isDown) {
+        this.playerDuck(2);
       }
 
       if(!this.cursors.down.isDown && this.player.isDucked && !this.pressingDown) {
@@ -197,18 +204,33 @@ SideScroller.Game.prototype = {
   gameOver: function() {
     this.game.state.start('Game');
   },
-  playerJump: function() {
-    if(this.player.body.blocked.down) {
-      this.player.body.velocity.y -= 700;
-    }    
+  playerJump: function(n) {
+    if (n==1 || n==undefined) {
+      if(this.player.body.blocked.down) {
+        this.player.body.velocity.y -= 700;
+      }    
+    } else {
+      if(this.player2.body.blocked.down) {
+        this.player2.body.velocity.y -= 700;
+      }   
+    }
   },
-  playerDuck: function() {
-      //change image and update the body size for the physics engine
-      this.player.loadTexture('playerDuck');
-      this.player.body.setSize(this.player.duckedDimensions.width, this.player.duckedDimensions.height);
-      
-      //we use this to keep track whether it's ducked or not
-      this.player.isDucked = true;
+  playerDuck: function(n) {
+    if (n==1 || n==undefined) {
+        //change image and update the body size for the physics engine
+        this.player.loadTexture('playerDuck');
+        this.player.body.setSize(this.player.duckedDimensions.width, this.player.duckedDimensions.height);
+        
+        //we use this to keep track whether it's ducked or not
+        this.player.isDucked = true;
+      } else {
+        //change image and update the body size for the physics engine
+        this.player2.loadTexture('playerDuck');
+        this.player2.body.setSize(this.player2.duckedDimensions.width, this.player2.duckedDimensions.height);
+        
+        //we use this to keep track whether it's ducked or not
+        this.player2.isDucked = true;
+      }
   },
   render: function()
     {
