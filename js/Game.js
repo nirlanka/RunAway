@@ -26,19 +26,26 @@ SideScroller.Game.prototype = {
     this.createCoins();
 
     //create player
-    this.player = this.game.add.sprite(100, 300, 'player');
+    this.player = this.game.add.sprite(140, 300, 'player');
+    this.player2 = this.game.add.sprite(50, 300, 'player'); // new player
 
     //enable physics on the player
     this.game.physics.arcade.enable(this.player);
+    this.game.physics.arcade.enable(this.player2); // new player
 
     //player gravity
     this.player.body.gravity.y = 1000;
+    this.player2.body.gravity.y = 1000;  // new player
 
     //properties when the player is ducked and standing, so we can use in update()
     var playerDuckImg = this.game.cache.getImage('playerDuck');
     this.player.duckedDimensions = {width: playerDuckImg.width, height: playerDuckImg.height};
     this.player.standDimensions = {width: this.player.width, height: this.player.height};
     this.player.anchor.setTo(0.5, 1);
+    // --> new player
+    this.player2.duckedDimensions = {width: playerDuckImg.width, height: playerDuckImg.height};
+    this.player2.standDimensions = {width: this.player.width, height: this.player.height};
+    this.player2.anchor.setTo(0.5, 1);
     
     //the camera will follow the player in the world
     this.game.camera.follow(this.player);
@@ -80,10 +87,14 @@ SideScroller.Game.prototype = {
     //collision
     this.game.physics.arcade.collide(this.player, this.blockedLayer, this.playerHit, null, this);
     this.game.physics.arcade.overlap(this.player, this.coins, this.collect, null, this);
+    // --> new player
+    this.game.physics.arcade.collide(this.player2, this.blockedLayer, this.playerHit, null, this);
+    this.game.physics.arcade.overlap(this.player2, this.coins, this.collect, null, this);
     
     //only respond to keys and keep the speed if the player is alive
     if(this.player.alive) {
       this.player.body.velocity.x = 300;  
+      this.player2.body.velocity.x = 300;  // new player
 
       if(this.cursors.up.isDown) {
         this.playerJump();
