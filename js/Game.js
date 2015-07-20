@@ -140,12 +140,15 @@ SideScroller.Game.prototype = {
 
       //set to dead (this doesn't affect rendering)
       this.player.alive = false;
+      this.player2.alive = false; // new player
 
       //stop moving to the right
       this.player.body.velocity.x = 0;
+      this.player2.body.velocity.x = 0; // new player
 
       //change sprite image
       this.player.loadTexture('playerDead');
+      this.player2.loadTexture('playerDead'); // new player
 
       //go to gameover after a few miliseconds
       this.game.time.events.add(1500, this.gameOver, this);
