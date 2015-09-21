@@ -265,6 +265,8 @@ SideScroller.Game.prototype = {
     this.points+=100
     this.txtPoints.setText(this.points)
   },
+ 
+// :-)
   initGameController: function() {
 
     if(!GameController.hasInitiated) {
@@ -283,25 +285,31 @@ SideScroller.Game.prototype = {
                     if(!that.player2.alive) {
                       return;
                     }
-                    that.playerJump(2);
+                    that.playerJump2();
+                  },
+                  touchEnd: function(){
+//                    that.pressingDown2 = false;
                   }
                 },
                 {
-                  label: '^^',
+                  label: '^',
                   touchStart: function() {
                     if(!that.player.alive) {
                       return;
                     }
                     that.playerJump();
+                  },
+                  touchEnd: function(){
+//                    that.pressingDown2 = false;
                   }
                 },
                 {
-                  label: 'vv',
+                  label: 'v',
                   touchStart: function() {
                     if(!that.player2.alive) {
                       return;
                     }
-                    that.pressingDown2 = true; that.playerDuck(2);
+                    that.pressingDown2 = true; that.playerDuck2();
                   },
                   touchEnd: function(){
                     that.pressingDown2 = false;
@@ -326,6 +334,7 @@ SideScroller.Game.prototype = {
     }
 
   },
+    
   //create coins
   createCoins: function() {
     this.coins = this.game.add.group();
@@ -339,39 +348,73 @@ SideScroller.Game.prototype = {
     this.txtStat.setText('Game Over :(');
     this.game.state.start('Game');
   },
-  playerJump: function(n) {
-    if (n==1 || n==undefined) {
+  playerJump: function() {
+//    if (n==1 || n==undefined) {
       if(this.player.body.blocked.down) {
         this.player.body.velocity.y -= 700;
         // this.player.loadTexture('player');
         this.player.animations.stop()
         this.player.frame=1
       }
-    } else {
+//    } else {
+//      if(this.player2.body.blocked.down) {
+//        this.player2.body.velocity.y -= 700;
+//        // this.player2.loadTexture('player2');
+//        this.player2.animations.stop()
+//        this.player2.frame=1
+//      }
+//    }
+  },
+  playerJump2: function() {
+//    if (n==1 || n==undefined) {
+//      if(this.player.body.blocked.down) {
+//        this.player.body.velocity.y -= 700;
+//        // this.player.loadTexture('player');
+//        this.player.animations.stop()
+//        this.player.frame=1
+//      }
+//    } else {
       if(this.player2.body.blocked.down) {
         this.player2.body.velocity.y -= 700;
         // this.player2.loadTexture('player2');
         this.player2.animations.stop()
         this.player2.frame=1
       }
-    }
+//    }
   },
-  playerDuck: function(n) {
-    if (n==1 || n==undefined) {
+  playerDuck: function() {
+//    if (n==1 || n==undefined) {
         //change image and update the body size for the physics engine
         this.player.loadTexture('playerDuck');
         this.player.body.setSize(this.player.duckedDimensions.width, this.player.duckedDimensions.height);
 
         //we use this to keep track whether it's ducked or not
         this.player.isDucked = true;
-      } else {
+//      } else {
+//        //change image and update the body size for the physics engine
+//        this.player2.loadTexture('playerDuck2');
+//        this.player2.body.setSize(this.player2.duckedDimensions.width, this.player2.duckedDimensions.height);
+//
+//        //we use this to keep track whether it's ducked or not
+//        this.player2.isDucked = true;
+//      }
+  },
+playerDuck2: function() {
+//    if (n==1 || n==undefined) {
+//        //change image and update the body size for the physics engine
+//        this.player.loadTexture('playerDuck');
+//        this.player.body.setSize(this.player.duckedDimensions.width, this.player.duckedDimensions.height);
+//
+//        //we use this to keep track whether it's ducked or not
+//        this.player.isDucked = true;
+//      } else {
         //change image and update the body size for the physics engine
         this.player2.loadTexture('playerDuck2');
         this.player2.body.setSize(this.player2.duckedDimensions.width, this.player2.duckedDimensions.height);
 
         //we use this to keep track whether it's ducked or not
         this.player2.isDucked = true;
-      }
+//      }
   },
   render: function()
     {
