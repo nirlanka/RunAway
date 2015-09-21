@@ -84,6 +84,7 @@ SideScroller.Game.prototype = {
     this.cursors = this.game.input.keyboard.createCursorKeys();
 
     //init game controller
+    // nir
     this.initGameController();
 
     //sounds
@@ -163,17 +164,17 @@ SideScroller.Game.prototype = {
     //   this.txtPoints.body.velocity.x=300
 
       if(this.cursors.up.isDown) {
-        this.playerJump(1);
+        this.playerJump();
       }
-      else if(this.cursors.down.isDown) {
-        this.playerDuck(1);
+      else if(this.cursors.down.isDown || this.pressingDown) {
+        this.playerDuck();
       }
       // --> new player
       if(this.cursors.left.isDown) {
-        this.playerJump(2);
+        this.playerJump2();
       }
-      else if(this.cursors.right.isDown) {
-        this.playerDuck(2);
+      else if(this.cursors.right.isDown || this.pressingDown2) {
+        this.playerDuck2();
       }
 
       if(!this.cursors.down.isDown && this.player.isDucked && !this.pressingDown) {
@@ -217,7 +218,7 @@ SideScroller.Game.prototype = {
     // || player2.body.blocked.right
     if(player.body.blocked.right ) {
 
-      console.log(player.body.blocked);
+//      console.log(player.body.blocked);
     //   console.log(player2.body.blocked);
 
       //set to dead (this doesn't affect rendering)
@@ -276,6 +277,7 @@ SideScroller.Game.prototype = {
           left: {
               type: 'none',
           },
+//          left : ,
           right: {
               type: 'buttons',
               buttons: [
@@ -288,7 +290,7 @@ SideScroller.Game.prototype = {
                     that.playerJump2();
                   },
                   touchEnd: function(){
-//                    that.pressingDown2 = false;
+                    that.pressingDown2 = false;
                   }
                 },
                 {
@@ -298,18 +300,6 @@ SideScroller.Game.prototype = {
                       return;
                     }
                     that.playerJump();
-                  },
-                  touchEnd: function(){
-//                    that.pressingDown2 = false;
-                  }
-                },
-                {
-                  label: 'v',
-                  touchStart: function() {
-                    if(!that.player2.alive) {
-                      return;
-                    }
-                    that.pressingDown2 = true; that.playerDuck2();
                   },
                   touchEnd: function(){
                     that.pressingDown2 = false;
@@ -322,9 +312,25 @@ SideScroller.Game.prototype = {
                       return;
                     }
                     that.pressingDown = true; that.playerDuck();
+                    console.log(1);
                   },
                   touchEnd: function(){
-                    that.pressingDown = false;
+                    that.pressingDown = false; /*that.unDuck();*/
+                    console.log(11);
+                  }
+                },
+                {
+                  label: 'v',
+                  touchStart: function() {
+                    if(!that.player2.alive) {
+                      return;
+                    }
+                    that.pressingDown2 = true; that.playerDuck2();
+                    console.log(2);
+                  },
+                  touchEnd: function(){
+                    that.pressingDown2 = false;/* that.unDuck2();*/
+                    console.log(22);
                   }
                 }
               ]
@@ -383,6 +389,7 @@ SideScroller.Game.prototype = {
 //    }
   },
   playerDuck: function() {
+      console.log('duck 1',this.pressingDown);
 //    if (n==1 || n==undefined) {
         //change image and update the body size for the physics engine
         this.player.loadTexture('playerDuck');
@@ -418,7 +425,7 @@ playerDuck2: function() {
   },
   render: function()
     {
-        // this.game.debug.text(this.game.time.fps || '--', 20, 70, "#00ff00", "40px Monaco");
-        // this.game.debug.bodyInfo(this.dad, 0, 80);
+//         this.game.debug.text(this.game.time.fps || '--', 20, 70, "#00ff00", "40px Monaco");
+//         this.game.debug.bodyInfo(this.dad, 0, 80);
     }
 };

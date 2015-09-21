@@ -136,14 +136,14 @@
 				type: 'buttons', 
 				position: { right: '17%', bottom: '28%' }, 
 				buttons: [
-					{ offset: { x: '-150%', y: '-15%' }, label: 'X', radius: '7%', stroke: 6, backgroundColor: 'white', fontColor: '#333', touchStart: function() {
+					{ offset: { x: '-150%', y: '-5%' }, label: 'X', radius: '7%', stroke: 6, backgroundColor: 'white', fontColor: '#333', touchStart: function() {
 						// Blue is currently mapped to up button
 //						GameController.simulateKeyEvent( 'press', 88 ); // x key
 						GameController.simulateKeyEvent( 'down', 88 );
 					}, touchEnd: function() {
 						GameController.simulateKeyEvent( 'up', 88 );	
 					} },
-					{ offset: { x: '13%', y: '-15%' }, label: 'Y', radius: '7%', stroke: 6, backgroundColor: 'white', fontColor: '#333', touchStart: function() {
+					{ offset: { x: '13%', y: '-5%' }, label: 'Y', radius: '7%', stroke: 6, backgroundColor: 'white', fontColor: '#333', touchStart: function() {
 //						GameController.simulateKeyEvent( 'press', 70 ); // f key
 						GameController.simulateKeyEvent( 'down', 70 );
 					}, touchEnd: function() {
